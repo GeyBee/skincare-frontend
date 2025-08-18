@@ -1469,12 +1469,17 @@ async function getAnalytics() {
     
             try {
                 const data = await getAIRecommendations();
-                if (data && data.recommendations) {
+                console.log('Données reçues:', data); // Pour débugger
+        
+                if (data && data.recommendations && data.recommendations.length > 0) {
                     displayRecommendations(data.recommendations);
+                } else if (data && data.message) {
+                    output.innerHTML = `<p style="text-align:center; color:#ff6b6b;">${data.message}</p>`;
                 } else {
                     output.innerHTML = '<p style="text-align:center; color:#ff6b6b;">Crée d\'abord ton profil de peau !</p>';
                 }
             } catch (error) {
+                console.error('Erreur:', error);
                 output.innerHTML = '<p style="text-align:center; color:#ff6b6b;">Erreur de connexion à l\'API</p>';
             }
         }
@@ -1690,23 +1695,34 @@ async function getAnalytics() {
                     <p>Basées sur ton type de peau ${skinType} et tes préoccupations</p>
                 </div>
             `;
-            
+    
             recommendations.forEach(rec => {
+        // Vérifier la structure de l'objet
+                const product = rec.product || {};
+                const productName = product.name || 'Produit recommandé';
+                const productPrice = product.price ? `${product.price}€` : 'Prix à vérifier';
+                const productBrand = product.brand || '';
+                const productRating = product.rating || '';
+                const reasons = rec.reasons || [];
+                const urgency = rec.urgency || 'medium';
+                const category = rec.category || 'Soin';
+        
                 html += `
                     <div class="ai-recommendation">
                         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
-                            <strong style="color: #2d3748; font-size: 1.1em;">${rec.product}</strong>
-                            <span style="background: ${rec.urgency === 'high' ? '#f56565' : '#ed8936'}; color: white; padding: 4px 12px; border-radius: 20px; font-size: 0.8em;">
-                                ${rec.urgency === 'high' ? 'Priorité' : 'Conseillé'}
+                            <strong style="color: #2d3748; font-size: 1.1em;">${productName}</strong>
+                            <span style="background: ${urgency === 'high' ? '#f56565' : '#ed8936'}; color: white; padding: 4px 12px; border-radius: 20px; font-size: 0.8em;">
+                                ${urgency === 'high' ? 'Priorité' : 'Conseillé'}
                             </span>
                         </div>
-                        <p style="color: #718096; margin: 5px 0;">${rec.brand}</p>
-                        <p style="color: #4a5568; margin: 10px 0;">${rec.reason}</p>
-                        <p style="color: #667eea; font-weight: 700; font-size: 1.2em;">${rec.price}</p>
+                        <p style="color: #718096; margin: 5px 0;">${category}</p>
+                        ${reasons.length > 0 ? `<p style="color: #4a5568; margin: 10px 0;">${reasons.join(' • ')}</p>` : ''}
+                        <p style="color: #667eea; font-weight: 700; font-size: 1.2em;">${productPrice}</p>
+                        ${productRating ? `<p style="color: #718096; font-size: 0.9em;">Note: ${productRating}/5 ⭐</p>` : ''}
                     </div>
                 `;
             });
-            
+    
             output.innerHTML = html;
             showNotification('🎯 Recommandations générées !');
         }
