@@ -1692,39 +1692,54 @@ async function getAnalytics() {
             let html = `
                 <div style="text-align: center; margin-bottom: 30px;">
                     <h3><i class="fas fa-shopping-cart"></i> Recommandations Personnalisées</h3>
-                    <p>Basées sur ton type de peau ${skinType} et tes préoccupations</p>
+                    <p>Basées sur ton type de peau ${skinType || ''} et tes préoccupations</p>
                 </div>
             `;
     
             recommendations.forEach(rec => {
-        // Vérifier la structure de l'objet
-                const product = rec.product || {};
-                const productName = product.name || 'Produit recommandé';
-                const productPrice = product.price ? `${product.price}€` : 'Prix à vérifier';
-                const productBrand = product.brand || '';
-                const productRating = product.rating || '';
-                const reasons = rec.reasons || [];
-                const urgency = rec.urgency || 'medium';
-                const category = rec.category || 'Soin';
+        // Les données sont dans rec.product
+                const product = rec.product;
+                const productName = product.name;
+                const productPrice = product.price + '€';
+                const productRating = product.rating;
+                const productDescription = product.description || '';
+                const category = rec.category;
+                const reasons = rec.reasons;
+                const urgency = rec.urgency;
+                const matchScore = rec.match_score;
         
                 html += `
-                    <div class="ai-recommendation">
+                    <div class="ai-recommendation" style="background: white; border-radius: 15px; padding: 20px; margin: 15px 0; border-left: 4px solid #ff6b6b; box-shadow: 0 2px 8px rgba(0,0,0,0.05);">
                         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
                             <strong style="color: #2d3748; font-size: 1.1em;">${productName}</strong>
-                            <span style="background: ${urgency === 'high' ? '#f56565' : '#ed8936'}; color: white; padding: 4px 12px; border-radius: 20px; font-size: 0.8em;">
-                                ${urgency === 'high' ? 'Priorité' : 'Conseillé'}
+                            <span style="background: ${urgency === 'high' ? '#f56565' : urgency === 'medium' ? '#ed8936' : '#48bb78'}; color: white; padding: 4px 12px; border-radius: 20px; font-size: 0.8em;">
+                                ${urgency === 'high' ? 'Priorité' : urgency === 'medium' ? 'Conseillé' : 'Option'}
                             </span>
                         </div>
-                        <p style="color: #718096; margin: 5px 0;">${category}</p>
-                        ${reasons.length > 0 ? `<p style="color: #4a5568; margin: 10px 0;">${reasons.join(' • ')}</p>` : ''}
-                        <p style="color: #667eea; font-weight: 700; font-size: 1.2em;">${productPrice}</p>
-                        ${productRating ? `<p style="color: #718096; font-size: 0.9em;">Note: ${productRating}/5 ⭐</p>` : ''}
+                        <p style="color: #718096; margin: 5px 0; font-size: 0.9em;">
+                            <strong>Catégorie:</strong> ${category} 
+                            ${productRating ? `• <strong>Note:</strong> ${productRating}/5 ⭐` : ''}
+                            ${matchScore ? `• <strong>Compatibilité:</strong> ${matchScore}%` : ''}
+                        </p>
+                        ${reasons && reasons.length > 0 ? `
+                            <p style="color: #4a5568; margin: 10px 0; padding: 10px; background: #f7fafc; border-radius: 8px;">
+                                <strong>Pourquoi ce produit:</strong> ${reasons.join(' • ')}
+                            </p>
+                        ` : ''}
+                        ${productDescription ? `
+                            <p style="color: #718096; margin: 8px 0; font-style: italic;">
+                                ${productDescription}
+                            </p>
+                        ` : ''}
+                        <p style="color: #667eea; font-weight: 700; font-size: 1.3em; margin-top: 10px;">
+                            ${productPrice}
+                        </p>
                     </div>
                 `;
             });
     
             output.innerHTML = html;
-            showNotification('🎯 Recommandations générées !');
+            showNotification('🎯 Recommandations générées avec succès !');
         }
 
         function displayPredictions(predictions) {
