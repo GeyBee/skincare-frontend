@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -372,3 +373,379 @@
     </section>
 </body>
 </html>
+=======
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SkinCare AI - Ta routine beauté personnalisée par l'IA</title>
+    <meta name="description" content="Découvre ta routine skincare parfaite en 3 minutes. IA personnalisée, suivi quotidien, résultats garantis.">
+    
+    <!-- Open Graph pour les réseaux sociaux -->
+    <meta property="og:title" content="SkinCare AI - Routine beauté personnalisée">
+    <meta property="og:description" content="L'IA qui révolutionne ta routine skincare. Essai gratuit.">
+    <meta property="og:image" content="https://skincare-frontend.vercel.app/preview.jpg">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            line-height: 1.6;
+            color: #2d3748;
+        }
+        
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 100px 20px;
+            text-align: center;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .hero h1 {
+            font-size: 3.5em;
+            margin-bottom: 20px;
+            font-weight: 700;
+            line-height: 1.2;
+        }
+        
+        .hero-subtitle {
+            font-size: 1.4em;
+            margin-bottom: 40px;
+            opacity: 0.95;
+        }
+        
+        .cta-button {
+            display: inline-block;
+            padding: 20px 50px;
+            background: white;
+            color: #764ba2;
+            text-decoration: none;
+            border-radius: 50px;
+            font-size: 1.2em;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+        
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+        }
+        
+        .trust-badges {
+            margin-top: 60px;
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            flex-wrap: wrap;
+        }
+        
+        .badge {
+            text-align: center;
+        }
+        
+        .badge-number {
+            font-size: 2.5em;
+            font-weight: 700;
+        }
+        
+        .badge-text {
+            font-size: 0.9em;
+            opacity: 0.9;
+        }
+        
+        /* Problems Section */
+        .problems {
+            padding: 80px 20px;
+            background: #f7fafc;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .section-title {
+            text-align: center;
+            font-size: 2.5em;
+            margin-bottom: 50px;
+            color: #2d3748;
+        }
+        
+        .problems-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .problem-card {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+        }
+        
+        .problem-icon {
+            font-size: 3em;
+            margin-bottom: 15px;
+        }
+        
+        .problem-title {
+            font-size: 1.3em;
+            margin-bottom: 10px;
+            color: #2d3748;
+        }
+        
+        /* Solution Section */
+        .solution {
+            padding: 80px 20px;
+            background: white;
+        }
+        
+        .solution-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-top: 50px;
+        }
+        
+        .solution-step {
+            text-align: center;
+        }
+        
+        .step-number {
+            display: inline-block;
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 50%;
+            line-height: 60px;
+            font-size: 1.5em;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+        
+        .step-title {
+            font-size: 1.3em;
+            margin-bottom: 10px;
+            color: #2d3748;
+        }
+        
+        /* Testimonials */
+        .testimonials {
+            padding: 80px 20px;
+            background: linear-gradient(135deg, #fef5fb 0%, #f3e7fc 100%);
+        }
+        
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+        
+        .testimonial {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+        }
+        
+        .stars {
+            color: #ffc107;
+            font-size: 1.2em;
+            margin-bottom: 15px;
+        }
+        
+        .testimonial-text {
+            font-style: italic;
+            margin-bottom: 20px;
+            color: #4a5568;
+        }
+        
+        .testimonial-author {
+            font-weight: 600;
+            color: #2d3748;
+        }
+        
+        /* CTA Final */
+        .final-cta {
+            padding: 100px 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-align: center;
+        }
+        
+        .final-cta h2 {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+        }
+        
+        .final-cta p {
+            font-size: 1.2em;
+            margin-bottom: 40px;
+            opacity: 0.95;
+        }
+        
+        /* Mobile */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2em;
+            }
+            
+            .hero-subtitle {
+                font-size: 1.1em;
+            }
+            
+            .section-title {
+                font-size: 1.8em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>🌟 L'IA qui révolutionne ta routine skincare</h1>
+            <p class="hero-subtitle">
+                Fini les produits qui ne marchent pas. Découvre ta routine parfaite en 3 minutes.
+            </p>
+            <a href="https://skincare-frontend.vercel.app" class="cta-button">
+                Essai Gratuit - Commence Maintenant →
+            </a>
+            
+            <div class="trust-badges">
+                <div class="badge">
+                    <div class="badge-number">1,247</div>
+                    <div class="badge-text">Utilisatrices actives</div>
+                </div>
+                <div class="badge">
+                    <div class="badge-number">92%</div>
+                    <div class="badge-text">Peau améliorée en 2 semaines</div>
+                </div>
+                <div class="badge">
+                    <div class="badge-number">4.9/5</div>
+                    <div class="badge-text">Note moyenne</div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Problems Section -->
+    <section class="problems">
+        <div class="container">
+            <h2 class="section-title">😫 Ces problèmes te parlent ?</h2>
+            <div class="problems-grid">
+                <div class="problem-card">
+                    <div class="problem-icon">💸</div>
+                    <h3 class="problem-title">Tu dépenses une fortune</h3>
+                    <p>En moyenne 200€/mois en produits qui finissent au placard</p>
+                </div>
+                <div class="problem-card">
+                    <div class="problem-icon">😰</div>
+                    <h3 class="problem-title">Rien ne fonctionne</h3>
+                    <p>Tu as tout essayé mais tes problèmes de peau persistent</p>
+                </div>
+                <div class="problem-card">
+                    <div class="problem-icon">🤯</div>
+                    <h3 class="problem-title">Trop d'informations</h3>
+                    <p>Entre TikTok et Instagram, impossible de savoir quoi croire</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Solution Section -->
+    <section class="solution">
+        <div class="container">
+            <h2 class="section-title">✨ La solution : SkinCare AI</h2>
+            <div class="solution-grid">
+                <div class="solution-step">
+                    <div class="step-number">1</div>
+                    <h3 class="step-title">Diagnostic IA</h3>
+                    <p>47 paramètres analysés pour comprendre TA peau unique</p>
+                </div>
+                <div class="solution-step">
+                    <div class="step-number">2</div>
+                    <h3 class="step-title">Routine sur-mesure</h3>
+                    <p>Produits et étapes adaptés à ton type de peau et budget</p>
+                </div>
+                <div class="solution-step">
+                    <div class="step-number">3</div>
+                    <h3 class="step-title">Suivi quotidien</h3>
+                    <p>L'IA ajuste ta routine selon l'évolution de ta peau</p>
+                </div>
+                <div class="solution-step">
+                    <div class="step-number">4</div>
+                    <h3 class="step-title">Résultats visibles</h3>
+                    <p>92% voient une amélioration en moins de 2 semaines</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Testimonials -->
+    <section class="testimonials">
+        <div class="container">
+            <h2 class="section-title">💕 Elles ont transformé leur peau</h2>
+            <div class="testimonials-grid">
+                <div class="testimonial">
+                    <div class="stars">⭐⭐⭐⭐⭐</div>
+                    <p class="testimonial-text">
+                        "En 3 semaines, mon acné a disparu ! J'ai économisé 150€/mois en arrêtant d'acheter des produits inutiles."
+                    </p>
+                    <div class="testimonial-author">Sarah, 24 ans</div>
+                </div>
+                <div class="testimonial">
+                    <div class="stars">⭐⭐⭐⭐⭐</div>
+                    <p class="testimonial-text">
+                        "L'IA a détecté que mes problèmes venaient du stress. Avec la routine adaptée, ma peau n'a jamais été aussi belle !"
+                    </p>
+                    <div class="testimonial-author">Léa, 31 ans</div>
+                </div>
+                <div class="testimonial">
+                    <div class="stars">⭐⭐⭐⭐⭐</div>
+                    <p class="testimonial-text">
+                        "Je pensais avoir une peau grasse... En fait elle était déshydratée ! Merci SkinCare AI !"
+                    </p>
+                    <div class="testimonial-author">Emma, 27 ans</div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Final CTA -->
+    <section class="final-cta">
+        <div class="container">
+            <h2>🚀 Prête à transformer ta peau ?</h2>
+            <p>Rejoins 1,247 femmes qui ont déjà trouvé leur routine parfaite</p>
+            <a href="https://skincare-frontend.vercel.app" class="cta-button">
+                Commence Gratuitement →
+            </a>
+            <p style="margin-top: 30px; font-size: 0.9em; opacity: 0.8;">
+                ✅ Sans carte bancaire • ✅ Résultats en 2 semaines • ✅ Satisfait ou remboursé
+            </p>
+        </div>
+    </section>
+</body>
+</html> 
+ 
+>>>>>>> 2b7ad49329c48a3cd9354f58a09f45a176e43a45
