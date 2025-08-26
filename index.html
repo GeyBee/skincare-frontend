@@ -777,19 +777,8 @@
             </div>
         </div>
 
-        <!-- Check-in -->
-        <div class="section" id="checkin">
-            <h2>📝 Check-in quotidien</h2>
-            <div class="form-group">
-                <label for="skinCondition">État de ta peau aujourd'hui (1-10) :</label>
-                <input type="range" id="skinCondition" min="1" max="10" value="5" oninput="updateSkinDisplay()">
-                <div style="text-align: center; margin-top: 10px;">
-                    <span id="skinDisplay">5 / 10</span>
-                </div>
-            </div>
-
-            <!-- Section Cycle Tracker -->
-<div id="cycleTrackerSection" style="display: none; padding: 20px;">
+        <!-- Section Cycle Tracker corrigée -->
+<div class="section" id="cycleTrackerSection">
     <div style="background: linear-gradient(135deg, #fce4ec 0%, #f8bbd0 100%); border-radius: 20px; padding: 30px; margin-bottom: 30px;">
         <h2 style="color: #880e4f; margin-bottom: 20px;">
             🌙 Cycle & Peau Tracker
@@ -829,7 +818,7 @@
             
             <button onclick="setupCycle()" 
                     style="width: 100%; padding: 15px; background: linear-gradient(135deg, #ec407a 0%, #ad1457 100%); 
-                           color: white; border: none; border-radius: 10px; font-size: 1.1em; cursor: pointer;">
+                           color: white; border: none; border-radius: 10px; font-size: 1.1em; cursor: pointer; transition: transform 0.2s;">
                 Configurer mon cycle 🌙
             </button>
         </div>
@@ -855,20 +844,249 @@
         </div>
     </div>
     
-    <!-- Bouton retour -->
-    <button onclick="showDashboard()" 
-            style="padding: 12px 30px; background: #e2e8f0; color: #4a5568; 
-                   border: none; border-radius: 10px; cursor: pointer;">
+    <!-- BOUTON RETOUR CORRIGÉ -->
+    <button onclick="returnToDashboard()" 
+            style="padding: 12px 24px; background: linear-gradient(135deg, #718096 0%, #4a5568 100%); 
+                   color: white; border: none; border-radius: 10px; cursor: pointer; font-size: 1em; 
+                   transition: transform 0.2s; margin-top: 20px;">
         ← Retour au dashboard
     </button>
 </div>
-            <div class="form-group">
-                <label for="sleepHours">Heures de sommeil :</label>
-                <input type="number" id="sleepHours" min="1" max="12" value="7" placeholder="7">
-            </div>
-            <button onclick="submitCheckIn()">Enregistrer mon check-in ✅</button>
+
+<!-- Section Check-in (reste inchangée) -->
+<div class="section" id="checkin">
+    <h2>📝 Check-in quotidien</h2>
+    <div class="form-group">
+        <label for="skinCondition">État de ta peau aujourd'hui (1-10) :</label>
+        <input type="range" id="skinCondition" min="1" max="10" value="5" oninput="updateSkinDisplay()">
+        <div style="text-align: center; margin-top: 10px;">
+            <span id="skinDisplay">5 / 10</span>
         </div>
     </div>
+    <div class="form-group">
+        <label for="sleepHours">Heures de sommeil :</label>
+        <input type="number" id="sleepHours" min="1" max="12" value="7" placeholder="7">
+    </div>
+    <button onclick="submitCheckIn()">Enregistrer mon check-in ✅</button>
+</div>
+
+<!-- AJOUTE CE SCRIPT JAVASCRIPT -->
+<script>
+// Fonction pour retourner au dashboard
+function returnToDashboard() {
+    // Cache toutes les sections
+    document.querySelectorAll('.section').forEach(section => {
+        section.classList.remove('active');
+        section.style.display = 'none';
+    });
+    
+    // Affiche la section result (dashboard)
+    const dashboard = document.getElementById('result');
+    if (dashboard) {
+        dashboard.classList.add('active');
+        dashboard.style.display = 'block';
+    }
+    
+    // Scroll vers le haut
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// Fonction pour afficher le cycle tracker
+function showCycleTracker() {
+    // Cache toutes les sections
+    document.querySelectorAll('.section').forEach(section => {
+        section.classList.remove('active');
+        section.style.display = 'none';
+    });
+    
+    // Affiche la section cycle tracker
+    const cycleSection = document.getElementById('cycleTrackerSection');
+    if (cycleSection) {
+        cycleSection.classList.add('active');
+        cycleSection.style.display = 'block';
+    }
+    
+    // Scroll vers le haut
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// Fonction pour mettre à jour l'affichage de l'état de peau
+function updateSkinDisplay() {
+    const value = document.getElementById('skinCondition').value;
+    document.getElementById('skinDisplay').textContent = value + ' / 10';
+}
+
+// Fonction pour configurer le cycle
+async function setupCycle() {
+    const lastPeriodDate = document.getElementById('lastPeriodDate').value;
+    const cycleLength = document.getElementById('cycleLength').value;
+    const periodDuration = document.getElementById('periodDuration').value;
+    
+    if (!lastPeriodDate) {
+        showNotification('⚠️ Sélectionne la date de tes dernières règles');
+        return;
+    }
+    
+    try {
+        const response = await fetch(`${API_URL}/cycle/setup`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                last_period_date: lastPeriodDate,
+                cycle_length: parseInt(cycleLength),
+                period_duration: parseInt(periodDuration)
+            })
+        });
+        
+        if (response.ok) {
+            const data = await response.json();
+            displayCycleAnalysis(data);
+            showNotification('✅ Cycle configuré avec succès!');
+        } else {
+            throw new Error('Erreur lors de la configuration');
+        }
+    } catch (error) {
+        console.error('Erreur:', error);
+        showNotification('⚠️ Erreur de connexion au serveur');
+        // Mode démo si erreur
+        displayDemoCycleData();
+    }
+}
+
+// Fonction pour afficher l'analyse du cycle
+function displayCycleAnalysis(data) {
+    // Cache la configuration et montre les résultats
+    document.getElementById('cycleSetup').style.display = 'none';
+    document.getElementById('cycleAnalysis').style.display = 'block';
+    
+    // Affiche la phase actuelle
+    const phaseColors = {
+        'menstruelle': '#d32f2f',
+        'folliculaire': '#388e3c',
+        'ovulatoire': '#fbc02d',
+        'lutéale': '#7b1fa2'
+    };
+    
+    const phaseEmojis = {
+        'menstruelle': '🩸',
+        'folliculaire': '🌱',
+        'ovulatoire': '✨',
+        'lutéale': '⚠️'
+    };
+    
+    document.getElementById('currentPhaseDisplay').innerHTML = `
+        <div style="display: flex; align-items: center; justify-content: space-between;">
+            <div>
+                <h3 style="color: ${phaseColors[data.current_phase] || '#2d3748'}; margin: 0;">
+                    ${phaseEmojis[data.current_phase] || '📅'} Phase ${data.current_phase}
+                </h3>
+                <p style="color: #718096; margin: 5px 0;">Jour ${data.day_of_cycle} du cycle</p>
+            </div>
+            <div style="text-align: right;">
+                <p style="color: #e91e63; font-weight: bold; margin: 0;">
+                    ${data.days_until_period} jours
+                </p>
+                <p style="color: #718096; font-size: 0.9em; margin: 0;">
+                    avant les prochaines règles
+                </p>
+            </div>
+        </div>
+    `;
+    
+    // Affiche les conseils peau
+    const skinTipsHtml = data.skin_tips.map(tip => `
+        <div style="padding: 10px; background: #fce4ec; border-radius: 8px; margin-bottom: 10px;">
+            ${tip}
+        </div>
+    `).join('');
+    document.getElementById('skinTipsDisplay').innerHTML = skinTipsHtml;
+    
+    // Affiche les recommandations produits
+    document.getElementById('productRecommendationsDisplay').innerHTML = `
+        <div style="padding: 15px; background: #f8bbd0; border-radius: 10px;">
+            <p style="margin: 0;">
+                <strong>Œstrogènes:</strong> ${data.hormone_level.estrogen}<br>
+                <strong>Progestérone:</strong> ${data.hormone_level.progesterone}
+            </p>
+        </div>
+    `;
+}
+
+// Fonction pour afficher des données de démonstration
+function displayDemoCycleData() {
+    const demoData = {
+        current_phase: 'folliculaire',
+        day_of_cycle: 10,
+        days_until_period: 18,
+        skin_tips: [
+            '🌱 Phase folliculaire - Peau en régénération',
+            'Parfait pour les exfoliants doux',
+            'Les masques nourrissants sont idéaux',
+            'Ta peau absorbe mieux les soins'
+        ],
+        hormone_level: {
+            estrogen: 'high',
+            progesterone: 'low'
+        }
+    };
+    
+    displayCycleAnalysis(demoData);
+    showNotification('📱 Mode démonstration activé');
+}
+
+// Fonction pour afficher les notifications
+function showNotification(message) {
+    // Crée ou trouve le conteneur de notifications
+    let notificationContainer = document.getElementById('notificationContainer');
+    if (!notificationContainer) {
+        notificationContainer = document.createElement('div');
+        notificationContainer.id = 'notificationContainer';
+        notificationContainer.style.cssText = `
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 10000;
+        `;
+        document.body.appendChild(notificationContainer);
+    }
+    
+    // Crée la notification
+    const notification = document.createElement('div');
+    notification.style.cssText = `
+        background: white;
+        padding: 15px 20px;
+        border-radius: 10px;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        margin-bottom: 10px;
+        animation: slideIn 0.3s ease;
+    `;
+    notification.textContent = message;
+    
+    notificationContainer.appendChild(notification);
+    
+    // Supprime après 3 secondes
+    setTimeout(() => {
+        notification.style.animation = 'slideOut 0.3s ease';
+        setTimeout(() => notification.remove(), 300);
+    }, 3000);
+}
+
+// CSS pour les animations
+const style = document.createElement('style');
+style.textContent = `
+    @keyframes slideIn {
+        from { transform: translateX(100%); opacity: 0; }
+        to { transform: translateX(0); opacity: 1; }
+    }
+    @keyframes slideOut {
+        from { transform: translateX(0); opacity: 1; }
+        to { transform: translateX(100%); opacity: 0; }
+    }
+`;
+document.head.appendChild(style);
+</script>
 
     <div class="notification" id="notification"></div>
 
@@ -885,20 +1103,30 @@ const API_URL = window.location.hostname === 'localhost'
 // === FONCTIONS API ===
 async function registerUser(userData) {
     try {
+        console.log('📤 Envoi des données:', userData);
+        
         const response = await fetch(`${API_URL}/auth/register`, {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify(userData)
         });
+        
+        console.log('📥 Statut réponse:', response.status);
         const data = await response.json();
+        console.log('📥 Données reçues:', data);
+        
         if (response.ok) {
             localStorage.setItem('token', data.token);
             localStorage.setItem('user', JSON.stringify(data.user));
             return data;
         }
-        throw new Error(data.detail || 'Erreur inscription');
+        
+        // Afficher l'erreur exacte du backend
+        console.error('❌ Erreur backend:', data);
+        throw new Error(data.detail || data.message || 'Erreur création compte');
+        
     } catch (error) {
-        console.error('Erreur:', error);
+        console.error('❌ Erreur complète:', error);
         throw error;
     }
 }
@@ -1913,18 +2141,25 @@ async function getAnalytics() {
         if (savedCheckins) {
             checkinsHistory = JSON.parse(savedCheckins);
         }
+
         // === FONCTIONS CYCLE TRACKER ===
+
 function showCycleTracker() {
     // Cacher toutes les sections
-    document.querySelectorAll('[id$="Section"]').forEach(section => {
-        section.style.display = 'none';
+    document.querySelectorAll('.section').forEach(section => {
+        section.classList.remove('active');
     });
     
     // Afficher le cycle tracker
-    document.getElementById('cycleTrackerSection').style.display = 'block';
-    
-    // Charger l'analyse si déjà configuré
-    loadCycleAnalysis();
+    const cycleSection = document.getElementById('cycleTrackerSection');
+    if (cycleSection) {
+        cycleSection.classList.add('active');
+        loadCycleAnalysis();
+    } else {
+        // Si la section n'existe pas, afficher check-in par défaut
+        showNotification('⚠️ Section Cycle Tracker non trouvée');
+        showCheckIn();
+    }
 }
 
 async function setupCycle() {
@@ -1952,6 +2187,11 @@ async function setupCycle() {
         
         if (response.ok) {
             showNotification('✅ Cycle configuré avec succès !');
+            localStorage.setItem('cycleData', JSON.stringify({
+                last_period_date: lastPeriodDate,
+                cycle_length: cycleLength,
+                period_duration: periodDuration
+            }));
             loadCycleAnalysis();
         }
     } catch (error) {
@@ -1976,67 +2216,119 @@ async function loadCycleAnalysis() {
         document.getElementById('cycleAnalysis').style.display = 'block';
         
         // Phase actuelle
-        document.getElementById('currentPhaseDisplay').innerHTML = `
-            <div style="text-align: center; margin-bottom: 20px;">
-                <div style="font-size: 4em; margin-bottom: 10px;">${data.phase_emoji}</div>
-                <h3 style="color: #ec407a; margin-bottom: 10px;">Phase ${data.phase}</h3>
-                <p style="color: #4a5568;">Jour ${data.day_of_cycle} du cycle</p>
-                <p style="color: #718096; font-size: 0.9em;">
-                    Prochaines règles : ${data.period_status}
-                </p>
-            </div>
-            
-            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin-top: 20px;">
-                <div style="text-align: center; padding: 15px; background: #fce4ec; border-radius: 10px;">
-                    <div style="color: #880e4f; font-size: 0.9em;">Œstrogène</div>
-                    <div style="font-weight: bold; color: #ad1457;">${data.hormone_status.estrogen}</div>
+        const phaseDisplay = document.getElementById('currentPhaseDisplay');
+        if (phaseDisplay) {
+            phaseDisplay.innerHTML = `
+                <div style="text-align: center; margin-bottom: 20px;">
+                    <div style="font-size: 4em; margin-bottom: 10px;">${data.phase_emoji || '🌙'}</div>
+                    <h3 style="color: #ec407a; margin-bottom: 10px;">Phase ${data.phase || 'inconnue'}</h3>
+                    <p style="color: #4a5568;">Jour ${data.day_of_cycle || '?'} du cycle</p>
+                    <p style="color: #718096; font-size: 0.9em;">
+                        Prochaines règles : ${data.period_status || 'À calculer'}
+                    </p>
                 </div>
-                <div style="text-align: center; padding: 15px; background: #fce4ec; border-radius: 10px;">
-                    <div style="color: #880e4f; font-size: 0.9em;">Progestérone</div>
-                    <div style="font-weight: bold; color: #ad1457;">${data.hormone_status.progesterone}</div>
-                </div>
-                <div style="text-align: center; padding: 15px; background: #fce4ec; border-radius: 10px;">
-                    <div style="color: #880e4f; font-size: 0.9em;">Risque acné</div>
-                    <div style="font-weight: bold; color: #ad1457;">${data.skin_condition.acne_risk}</div>
-                </div>
-            </div>
-        `;
+            `;
+        }
         
         // Conseils peau
-        let tipsHtml = '<ul style="list-style: none; padding: 0;">';
-        data.skin_tips.forEach(tip => {
-            tipsHtml += `
-                <li style="padding: 10px; margin-bottom: 10px; background: #fce4ec; 
-                           border-radius: 8px; color: #880e4f;">
-                    ${tip}
-                </li>
-            `;
-        });
-        tipsHtml += '</ul>';
-        document.getElementById('skinTipsDisplay').innerHTML = tipsHtml;
+        const tipsDisplay = document.getElementById('skinTipsDisplay');
+        if (tipsDisplay && data.skin_tips) {
+            let tipsHtml = '<ul style="list-style: none; padding: 0;">';
+            data.skin_tips.forEach(tip => {
+                tipsHtml += `
+                    <li style="padding: 10px; margin-bottom: 10px; background: #fce4ec; 
+                               border-radius: 8px; color: #880e4f;">
+                        ${tip}
+                    </li>
+                `;
+            });
+            tipsHtml += '</ul>';
+            tipsDisplay.innerHTML = tipsHtml;
+        }
         
         // Produits recommandés
-        let productsHtml = '<div style="display: grid; gap: 15px;">';
-        data.product_recommendations.forEach(product => {
-            productsHtml += `
+        const productsDisplay = document.getElementById('productRecommendationsDisplay');
+        if (productsDisplay && data.product_recommendations) {
+            let productsHtml = '<div style="display: grid; gap: 15px;">';
+            data.product_recommendations.forEach(product => {
+                productsHtml += `
+                    <div style="display: flex; justify-content: space-between; align-items: center; 
+                               padding: 15px; background: #f7fafc; border-radius: 10px;">
+                        <div>
+                            <div style="color: #718096; font-size: 0.9em;">${product.type}</div>
+                            <div style="color: #2d3748; font-weight: 600;">${product.suggestion}</div>
+                        </div>
+                        <div style="padding: 8px 16px; background: #ec407a; color: white; 
+                                   border-radius: 20px; font-size: 0.85em; cursor: pointer;">
+                            Acheter
+                        </div>
+                    </div>
+                `;
+            });
+            productsHtml += '</div>';
+            productsDisplay.innerHTML = productsHtml;
+        }
+        
+    } catch (error) {
+        console.error('Erreur cycle analysis:', error);
+        // Afficher des données de démonstration si l'API ne répond pas
+        showNotification('⚠️ Mode démo activé');
+        displayDemoCycleData();
+    }
+}
+
+function displayDemoCycleData() {
+    const phaseDisplay = document.getElementById('currentPhaseDisplay');
+    if (phaseDisplay) {
+        phaseDisplay.innerHTML = `
+            <div style="text-align: center; margin-bottom: 20px;">
+                <div style="font-size: 4em; margin-bottom: 10px;">🌱</div>
+                <h3 style="color: #ec407a; margin-bottom: 10px;">Phase folliculaire</h3>
+                <p style="color: #4a5568;">Jour 10 du cycle</p>
+                <p style="color: #718096; font-size: 0.9em;">
+                    Prochaines règles : Dans 18 jours
+                </p>
+            </div>
+        `;
+    }
+    
+    const tipsDisplay = document.getElementById('skinTipsDisplay');
+    if (tipsDisplay) {
+        tipsDisplay.innerHTML = `
+            <ul style="list-style: none; padding: 0;">
+                <li style="padding: 10px; margin-bottom: 10px; background: #fce4ec; 
+                           border-radius: 8px; color: #880e4f;">
+                    🌱 Phase folliculaire - Peau en régénération
+                </li>
+                <li style="padding: 10px; margin-bottom: 10px; background: #fce4ec; 
+                           border-radius: 8px; color: #880e4f;">
+                    Moment idéal pour exfolier (AHA/BHA)
+                </li>
+                <li style="padding: 10px; margin-bottom: 10px; background: #fce4ec; 
+                           border-radius: 8px; color: #880e4f;">
+                    Les actifs sont mieux absorbés
+                </li>
+            </ul>
+        `;
+    }
+    
+    const productsDisplay = document.getElementById('productRecommendationsDisplay');
+    if (productsDisplay) {
+        productsDisplay.innerHTML = `
+            <div style="display: grid; gap: 15px;">
                 <div style="display: flex; justify-content: space-between; align-items: center; 
                            padding: 15px; background: #f7fafc; border-radius: 10px;">
                     <div>
-                        <div style="color: #718096; font-size: 0.9em;">${product.type}</div>
-                        <div style="color: #2d3748; font-weight: 600;">${product.suggestion}</div>
+                        <div style="color: #718096; font-size: 0.9em;">Exfoliant</div>
+                        <div style="color: #2d3748; font-weight: 600;">Acide glycolique 5-7%</div>
                     </div>
                     <div style="padding: 8px 16px; background: #ec407a; color: white; 
-                               border-radius: 20px; font-size: 0.85em;">
+                               border-radius: 20px; font-size: 0.85em; cursor: pointer;">
                         Acheter
                     </div>
                 </div>
-            `;
-        });
-        productsHtml += '</div>';
-        document.getElementById('productRecommendationsDisplay').innerHTML = productsHtml;
-        
-    } catch (error) {
-        showNotification('❌ Erreur : ' + error.message);
+            </div>
+        `;
     }
 }
     </script>
