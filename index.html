@@ -5009,17 +5009,17 @@ function displayAnalysisResults(analysis) {
 
 // Configuration Paddle (remplacez avec vos vraies clés après création du compte)
 const PADDLE_CONFIG = {
-    vendor: 'VOTRE_VENDOR_ID', // À remplacer après création compte
-    environment: 'sandbox', // Changer en 'production' pour le vrai paiement
+    vendor: '276616', // À remplacer après création compte
+    environment: 'production', // Changer en 'production' pour le vrai paiement
     products: {
         monthly: {
-            id: 'VOTRE_PRODUCT_ID_MENSUEL', // À remplacer
+            id: 'pri_01kdx3ayxws390y35qe0qk831c', // À remplacer
             price: 4.99,
             currency: 'EUR',
             name: 'Premium Mensuel'
         },
         yearly: {
-            id: 'VOTRE_PRODUCT_ID_ANNUEL', // À remplacer
+            id: 'pri_01kdx3dq8d9a380rcm1d0t1m4p', // À remplacer
             price: 29.99,
             currency: 'EUR',
             name: 'Premium Annuel'
@@ -5050,23 +5050,20 @@ function initiatePaddleCheckout(plan) {
         return;
     }
     
-    // Vérifier si Paddle est chargé
-    if (typeof Paddle === 'undefined') {
-        showNotification('⏳ Chargement du paiement...');
-        console.error('Paddle non chargé');
-        return;
-    }
-    
     const currentUser = JSON.parse(localStorage.getItem('user') || '{}');
     
+    // Paddle.js v2 (Billing)
     Paddle.Checkout.open({
-        product: product.id,
-        email: currentUser.email || '',
-        successCallback: function(data) {
-            handlePaymentSuccess(plan, data);
+        items: [{ priceId: product.id, quantity: 1 }],
+        customer: {
+            email: currentUser.email || ''
         },
-        closeCallback: function() {
-            console.log('💳 Checkout fermé');
+        customData: {
+            userId: currentUser.id || ''
+        },
+        settings: {
+            successUrl: window.location.href + '?payment=success',
+            theme: 'light'
         }
     });
 }
