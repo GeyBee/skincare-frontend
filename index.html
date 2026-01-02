@@ -546,6 +546,16 @@
             background: linear-gradient(135deg, #ffeef8 0%, #e6f2ff 100%) !important;
         }
     </style>
+    
+<!-- Paddle.js -->
+<script src="https://cdn.paddle.com/paddle/v2/paddle.js"></script>
+<script>
+    Paddle.Initialize({ 
+        seller: 276616,
+        environment: 'production'
+    });
+</script>
+
 </head>
 <body>
     <div class="container">
@@ -733,6 +743,20 @@
                     </div>
                     <div style="font-size: 1.5em;">→</div>
                 </div>
+            </div>
+            <!-- Bouton Premium -->
+            <div style="margin: 15px 0; text-align: center;">
+                <button onclick="showPaymentSection()" 
+                        style="padding: 12px 25px; 
+                               background: linear-gradient(135deg, #667eea, #764ba2);
+                               color: white; 
+                               border: none; 
+                               border-radius: 25px; 
+                               font-weight: bold;
+                               cursor: pointer;
+                               box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);">
+                    ⭐ Passer à Premium
+                </button>
             </div>
             <div class="result">
                 <h2>🎉 Ta routine personnalisée est prête !</h2>
