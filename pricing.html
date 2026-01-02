@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DailyGlow - Tarifs</title>
+    <style>
+        body { font-family: Arial, sans-serif; max-width: 900px; margin: 50px auto; padding: 20px; line-height: 1.6; background: linear-gradient(135deg, #ffeef8, #fff5f8); }
+        h1 { color: #667eea; text-align: center; }
+        .plans { display: flex; gap: 20px; flex-wrap: wrap; justify-content: center; margin-top: 40px; }
+        .plan { background: white; border-radius: 15px; padding: 30px; flex: 1; min-width: 250px; max-width: 280px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+        .plan.featured { border: 3px solid #667eea; }
+        .plan h2 { color: #2d3748; margin-bottom: 10px; }
+        .price { font-size: 2.5em; color: #667eea; margin: 20px 0; }
+        .price span { font-size: 0.4em; color: #718096; }
+        ul { list-style: none; padding: 0; }
+        li { margin: 10px 0; color: #4a5568; }
+        .btn { display: block; text-align: center; padding: 15px; background: linear-gradient(135deg, #667eea, #764ba2); color: white; text-decoration: none; border-radius: 8px; margin-top: 20px; font-weight: bold; }
+        .guarantee { text-align: center; margin-top: 40px; color: #38a169; }
+    </style>
+</head>
+<body>
+    <h1>Nos Tarifs</h1>
+    <p style="text-align: center; color: #666;">Choisissez le plan qui vous convient</p>
+    
+    <div class="plans">
+        <div class="plan">
+            <h2>Gratuit</h2>
+            <div class="price">0€</div>
+            <ul>
+                <li>✅ 3 analyses IA/mois</li>
+                <li>✅ Check-ins illimites</li>
+                <li>✅ Routine basique</li>
+                <li>✅ Historique 7 jours</li>
+            </ul>
+            <a href="https://skincare-frontend-final.vercel.app" class="btn">Commencer Gratuit</a>
+        </div>
+        
+        <div class="plan featured">
+            <h2>Premium Mensuel</h2>
+            <div class="price">4.99€<span>/mois</span></div>
+            <ul>
+                <li>✅ Analyses IA illimitees</li>
+                <li>✅ Score predit avance</li>
+                <li>✅ Comparaison avant/apres</li>
+                <li>✅ Historique complet</li>
+                <li>✅ Routines personnalisees</li>
+            </ul>
+            <a href="https://skincare-frontend-final.vercel.app" class="btn">Choisir Premium</a>
+        </div>
+        
+        <div class="plan">
+            <h2>Premium Annuel</h2>
+            <div class="price">29.99€<span>/an</span></div>
+            <p style="color: #38a169; text-align: center;">= 2.50€/mois (-50%)</p>
+            <ul>
+                <li>✅ Tout le plan mensuel</li>
+                <li>✅ 2 mois GRATUITS</li>
+                <li>✅ Support prioritaire</li>
+                <li>✅ Nouveautes en avant-premiere</li>
+            </ul>
+            <a href="https://skincare-frontend-final.vercel.app" class="btn">Choisir Annuel</a>
+        </div>
+    </div>
+    
+    <p class="guarantee">✅ Garantie satisfait ou rembourse 7 jours</p>
+    
+    <div style="text-align: center; margin-top: 40px;">
+        <a href="terms.html" style="color: #667eea; margin: 0 10px;">Conditions</a>
+        <a href="privacy.html" style="color: #667eea; margin: 0 10px;">Confidentialite</a>
+        <a href="refund.html" style="color: #667eea; margin: 0 10px;">Remboursement</a>
+    </div>
+</body>
+</html>
