@@ -1087,39 +1087,39 @@
     </div>
         <!-- Section Mood Tracker & Psycho-dermatologie -->
 <div class="section" id="moodTrackerSection">
-    <div style="background: linear-gradient(135deg, #f5f3ff 0%, #e8e5ff 100%); border-radius: 20px; padding: 30px; margin-bottom: 30px;">
-        <h2 style="color: #6c5ce7; margin-bottom: 20px;">
+    <div style="background: linear-gradient(135deg, #f5f3ff 0%, #e8e5ff 100%); border-radius: 20px; padding: 20px; margin-bottom: 30px; max-width: 100%; box-sizing: border-box;">
+        <h2 style="color: #6c5ce7; margin-bottom: 15px; font-size: 1.4em;">
             🧠 Mood & Psycho-dermatologie
         </h2>
-        <p style="color: #5f3dc4; margin-bottom: 30px;">
+        <p style="color: #5f3dc4; margin-bottom: 20px; font-size: 0.95em;">
             Découvre comment tes émotions influencent ta peau
         </p>
         
         <!-- Mood Check-in du jour -->
-        <div id="moodCheckIn" style="background: white; border-radius: 15px; padding: 25px; margin-bottom: 20px;">
-            <h3 style="color: #2d3748; margin-bottom: 20px;">💭 Comment te sens-tu aujourd'hui ?</h3>
+        <div id="moodCheckIn" style="background: white; border-radius: 15px; padding: 20px; margin-bottom: 20px; max-width: 100%; box-sizing: border-box;">
+            <h3 style="color: #2d3748; margin-bottom: 15px; font-size: 1.1em;">💭 Comment te sens-tu aujourd'hui ?</h3>
             
-            <!-- Sélection d'humeur -->
-            <div style="display: grid; grid-template-columns: repeat(5, 1fr); gap: 15px; margin-bottom: 25px;">
-                <div class="mood-option" onclick="selectMood('très mal', '😢', this)" style="text-align: center; padding: 15px; border: 2px solid #f0f0f0; border-radius: 12px; cursor: pointer; transition: all 0.3s;">
-                    <div style="font-size: 2.5em;">😢</div>
-                    <div style="font-size: 0.85em; color: #718096; margin-top: 5px;">Très mal</div>
+            <!-- Sélection d'humeur - CORRIGÉ POUR MOBILE -->
+            <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin-bottom: 25px;">
+                <div class="mood-option" onclick="selectMood('très mal', '😢', this)" style="text-align: center; padding: 12px 8px; border: 2px solid #f0f0f0; border-radius: 12px; cursor: pointer; transition: all 0.3s; min-width: 60px; flex: 0 0 auto;">
+                    <div style="font-size: 2em;">😢</div>
+                    <div style="font-size: 0.75em; color: #718096; margin-top: 5px;">Très mal</div>
                 </div>
-                <div class="mood-option" onclick="selectMood('mal', '😔', this)" style="text-align: center; padding: 15px; border: 2px solid #f0f0f0; border-radius: 12px; cursor: pointer; transition: all 0.3s;">
-                    <div style="font-size: 2.5em;">😔</div>
-                    <div style="font-size: 0.85em; color: #718096; margin-top: 5px;">Mal</div>
+                <div class="mood-option" onclick="selectMood('mal', '😔', this)" style="text-align: center; padding: 12px 8px; border: 2px solid #f0f0f0; border-radius: 12px; cursor: pointer; transition: all 0.3s; min-width: 60px; flex: 0 0 auto;">
+                    <div style="font-size: 2em;">😔</div>
+                    <div style="font-size: 0.75em; color: #718096; margin-top: 5px;">Mal</div>
                 </div>
-                <div class="mood-option" onclick="selectMood('neutre', '😐', this)" style="text-align: center; padding: 15px; border: 2px solid #f0f0f0; border-radius: 12px; cursor: pointer; transition: all 0.3s;">
-                    <div style="font-size: 2.5em;">😐</div>
-                    <div style="font-size: 0.85em; color: #718096; margin-top: 5px;">Neutre</div>
+                <div class="mood-option" onclick="selectMood('neutre', '😐', this)" style="text-align: center; padding: 12px 8px; border: 2px solid #f0f0f0; border-radius: 12px; cursor: pointer; transition: all 0.3s; min-width: 60px; flex: 0 0 auto;">
+                    <div style="font-size: 2em;">😐</div>
+                    <div style="font-size: 0.75em; color: #718096; margin-top: 5px;">Neutre</div>
                 </div>
-                <div class="mood-option" onclick="selectMood('bien', '😊', this)" style="text-align: center; padding: 15px; border: 2px solid #f0f0f0; border-radius: 12px; cursor: pointer; transition: all 0.3s;">
-                    <div style="font-size: 2.5em;">😊</div>
-                    <div style="font-size: 0.85em; color: #718096; margin-top: 5px;">Bien</div>
+                <div class="mood-option" onclick="selectMood('bien', '😊', this)" style="text-align: center; padding: 12px 8px; border: 2px solid #f0f0f0; border-radius: 12px; cursor: pointer; transition: all 0.3s; min-width: 60px; flex: 0 0 auto;">
+                    <div style="font-size: 2em;">😊</div>
+                    <div style="font-size: 0.75em; color: #718096; margin-top: 5px;">Bien</div>
                 </div>
-                <div class="mood-option" onclick="selectMood('très bien', '😄', this)" style="text-align: center; padding: 15px; border: 2px solid #f0f0f0; border-radius: 12px; cursor: pointer; transition: all 0.3s;">
-                    <div style="font-size: 2.5em;">😄</div>
-                    <div style="font-size: 0.85em; color: #718096; margin-top: 5px;">Très bien</div>
+                <div class="mood-option" onclick="selectMood('très bien', '😄', this)" style="text-align: center; padding: 12px 8px; border: 2px solid #f0f0f0; border-radius: 12px; cursor: pointer; transition: all 0.3s; min-width: 60px; flex: 0 0 auto;">
+                    <div style="font-size: 2em;">😄</div>
+                    <div style="font-size: 0.75em; color: #718096; margin-top: 5px;">Très bien</div>
                 </div>
             </div>
             
@@ -1148,44 +1148,44 @@
                 </div>
             </div>
             
-            <!-- Événements déclencheurs -->
+            <!-- Événements déclencheurs - CORRIGÉ POUR MOBILE -->
             <div style="margin-bottom: 20px;">
                 <label style="display: block; color: #4a5568; margin-bottom: 10px; font-weight: 500;">
                        📝 Événements marquants aujourd'hui
                 </label>
-            <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px;">
-                <button class="trigger-btn" onclick="toggleTrigger('travail stressant', this)" 
-                        style="padding: 10px 15px; border: 2px solid #e2e8f0; background: white; 
-                               border-radius: 10px; cursor: pointer; transition: all 0.3s; text-align: center;
-                               color: #4a5568; font-size: 0.95em;">Travail stressant</button>
-                <button class="trigger-btn" onclick="toggleTrigger('conflit relationnel', this)"
-                        style="padding: 10px 15px; border: 2px solid #e2e8f0; background: white; 
-                               border-radius: 10px; cursor: pointer; transition: all 0.3s; text-align: center;
-                               color: #4a5568; font-size: 0.95em;">Conflit relationnel</button>
-                <button class="trigger-btn" onclick="toggleTrigger('fatigue intense', this)"
-                        style="padding: 10px 15px; border: 2px solid #e2e8f0; background: white; 
-                               border-radius: 10px; cursor: pointer; transition: all 0.3s; text-align: center;
-                               color: #4a5568; font-size: 0.95em;">Fatigue intense</button>
-                <button class="trigger-btn" onclick="toggleTrigger('période menstruelle', this)"
-                        style="padding: 10px 15px; border: 2px solid #e2e8f0; background: white; 
-                               border-radius: 10px; cursor: pointer; transition: all 0.3s; text-align: center;
-                               color: #4a5568; font-size: 0.95em;">Période menstruelle</button>
-                <button class="trigger-btn" onclick="toggleTrigger('activité sportive', this)"
-                        style="padding: 10px 15px; border: 2px solid #e2e8f0; background: white; 
-                               border-radius: 10px; cursor: pointer; transition: all 0.3s; text-align: center;
-                               color: #4a5568; font-size: 0.95em;">Activité sportive</button>
-                <button class="trigger-btn" onclick="toggleTrigger('moment de joie', this)"
-                        style="padding: 10px 15px; border: 2px solid #e2e8f0; background: white; 
-                               border-radius: 10px; cursor: pointer; transition: all 0.3s; text-align: center;
-                               color: #4a5568; font-size: 0.95em;">Moment de joie</button>
-                <button class="trigger-btn" onclick="toggleTrigger('stress examens', this)"
-                        style="padding: 10px 15px; border: 2px solid #e2e8f0; background: white; 
-                               border-radius: 10px; cursor: pointer; transition: all 0.3s; text-align: center;
-                               color: #4a5568; font-size: 0.95em;">Stress examens</button>
-                <button class="trigger-btn" onclick="toggleTrigger('sortie sociale', this)"
-                        style="padding: 10px 15px; border: 2px solid #e2e8f0; background: white; 
-                               border-radius: 10px; cursor: pointer; transition: all 0.3s; text-align: center;
-                               color: #4a5568; font-size: 0.95em;">Sortie sociale</button>
+                <div style="display: flex; flex-wrap: wrap; gap: 8px;">
+                    <button class="trigger-btn" onclick="toggleTrigger('travail stressant', this)" 
+                            style="padding: 8px 12px; border: 2px solid #e2e8f0; background: white; 
+                                   border-radius: 10px; cursor: pointer; transition: all 0.3s;
+                                   color: #4a5568; font-size: 0.85em; flex: 0 0 auto;">Travail stressant</button>
+                    <button class="trigger-btn" onclick="toggleTrigger('conflit relationnel', this)"
+                            style="padding: 8px 12px; border: 2px solid #e2e8f0; background: white; 
+                                   border-radius: 10px; cursor: pointer; transition: all 0.3s;
+                                   color: #4a5568; font-size: 0.85em; flex: 0 0 auto;">Conflit relationnel</button>
+                    <button class="trigger-btn" onclick="toggleTrigger('fatigue intense', this)"
+                            style="padding: 8px 12px; border: 2px solid #e2e8f0; background: white; 
+                                   border-radius: 10px; cursor: pointer; transition: all 0.3s;
+                                   color: #4a5568; font-size: 0.85em; flex: 0 0 auto;">Fatigue intense</button>
+                    <button class="trigger-btn" onclick="toggleTrigger('période menstruelle', this)"
+                            style="padding: 8px 12px; border: 2px solid #e2e8f0; background: white; 
+                                   border-radius: 10px; cursor: pointer; transition: all 0.3s;
+                                   color: #4a5568; font-size: 0.85em; flex: 0 0 auto;">Période menstruelle</button>
+                    <button class="trigger-btn" onclick="toggleTrigger('activité sportive', this)"
+                            style="padding: 8px 12px; border: 2px solid #e2e8f0; background: white; 
+                                   border-radius: 10px; cursor: pointer; transition: all 0.3s;
+                                   color: #4a5568; font-size: 0.85em; flex: 0 0 auto;">Activité sportive</button>
+                    <button class="trigger-btn" onclick="toggleTrigger('moment de joie', this)"
+                            style="padding: 8px 12px; border: 2px solid #e2e8f0; background: white; 
+                                   border-radius: 10px; cursor: pointer; transition: all 0.3s;
+                                   color: #4a5568; font-size: 0.85em; flex: 0 0 auto;">Moment de joie</button>
+                    <button class="trigger-btn" onclick="toggleTrigger('stress examens', this)"
+                            style="padding: 8px 12px; border: 2px solid #e2e8f0; background: white; 
+                                   border-radius: 10px; cursor: pointer; transition: all 0.3s;
+                                   color: #4a5568; font-size: 0.85em; flex: 0 0 auto;">Stress examens</button>
+                    <button class="trigger-btn" onclick="toggleTrigger('sortie sociale', this)"
+                            style="padding: 8px 12px; border: 2px solid #e2e8f0; background: white; 
+                                   border-radius: 10px; cursor: pointer; transition: all 0.3s;
+                                   color: #4a5568; font-size: 0.85em; flex: 0 0 auto;">Sortie sociale</button>
                 </div>
             </div>
             
@@ -1199,7 +1199,7 @@
         <!-- Analyse de corrélation -->
         <div id="moodAnalysis" style="display: none;">
             <!-- Graphique de corrélation -->
-            <div style="background: white; border-radius: 15px; padding: 25px; margin-bottom: 20px;">
+            <div style="background: white; border-radius: 15px; padding: 20px; margin-bottom: 20px;">
                 <h4 style="color: #2d3748; margin-bottom: 15px;">📊 Corrélation Humeur-Peau (7 derniers jours)</h4>
                 <div id="correlationChart" style="min-height: 200px;">
                     <!-- Graphique simplifié -->
@@ -1207,13 +1207,13 @@
             </div>
             
             <!-- Insights psycho-dermatologiques -->
-            <div style="background: white; border-radius: 15px; padding: 25px; margin-bottom: 20px;">
+            <div style="background: white; border-radius: 15px; padding: 20px; margin-bottom: 20px;">
                 <h4 style="color: #2d3748; margin-bottom: 15px;">🔬 Tes patterns psycho-dermatologiques</h4>
                 <div id="psychoDermaInsights"></div>
             </div>
             
             <!-- Recommandations holistiques -->
-            <div style="background: white; border-radius: 15px; padding: 25px;">
+            <div style="background: white; border-radius: 15px; padding: 20px;">
                 <h4 style="color: #2d3748; margin-bottom: 15px;">✨ Routine mind-skin adaptée</h4>
                 <div id="holisticRecommendations"></div>
             </div>
@@ -1221,7 +1221,7 @@
     </div>
     
     <!-- Bouton retour au dashboard -->
-    <button onclick="returnToDashboard()">
+    <button onclick="returnToDashboard()" style="width: 100%; padding: 15px; background: #f0f0f0; border: none; border-radius: 10px; font-size: 1em; cursor: pointer; color: #666;">
         ← Retour au dashboard
     </button>
 </div>
