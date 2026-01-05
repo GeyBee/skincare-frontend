@@ -1972,6 +1972,7 @@ function displayTips(tips) {
                                color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: bold;">
                     Choisir Annuel ⭐
                 </button>
+                
             </div>
         </div>
         
@@ -4757,113 +4758,191 @@ function showMoodTracker() {
             insightsDiv.innerHTML = insights;
         }
 
-        function generateHolisticRecommendations() {
-            const recoDiv = document.getElementById('holisticRecommendations');
+function generateHolisticRecommendations() {
+    const recoDiv = document.getElementById('holisticRecommendations');
     
-            // Analyser l'état actuel
-            const lastMood = moodHistory[moodHistory.length - 1];
-            const needsStressRelief = lastMood && (lastMood.anxietyLevel > 6 || lastMood.moodScore < 4);
-            const needsSleepHelp = lastMood && lastMood.sleepQuality < 5;
-    
-            let recommendations = '<div style="display: grid; gap: 15px;">';
-    
-            // Routine mind-skin du jour
-            recommendations += `
-                <div style="padding: 20px; background: linear-gradient(135deg, #f5f3ff, #faf8ff); border-radius: 12px;">
-                    <h5 style="color: #6c5ce7; margin-bottom: 15px;">🌟 Ta routine mind-skin du jour</h5>
-                    <div style="display: grid; gap: 10px;">
-            `;
-    
-            if (needsStressRelief) {
-                recommendations += `
-                    <div style="padding: 12px; background: white; border-radius: 8px;">
-                        <strong style="color: #5f3dc4;">🧘‍♀️ Matin - Méditation guidée (5 min)</strong>
-                        <p style="color: #718096; margin-top: 5px; font-size: 0.85em;">
-                            Commence ta routine skincare par 5 respirations profondes. 
-                            Le stress du matin augmente la production de sébum de 23%.
-                        </p>
-                    </div>
-                    <div style="padding: 12px; background: white; border-radius: 8px;">
-                        <strong style="color: #5f3dc4;">💆‍♀️ Soir - Auto-massage facial (3 min)</strong>
-                        <p style="color: #718096; margin-top: 5px; font-size: 0.85em;">
-                            En appliquant ta crème, masse en mouvements circulaires. 
-                            Réduit le cortisol et améliore la circulation.
-                        </p>
-                    </div>
-                `;
-            }
-    
-            if (needsSleepHelp) {
-                recommendations += `
-                    <div style="padding: 12px; background: white; border-radius: 8px;">
-                        <strong style="color: #5f3dc4;">🌙 Rituel sommeil-beauté (21h)</strong>
-                        <p style="color: #718096; margin-top: 5px; font-size: 0.85em;">
-                            • Éteins les écrans 1h avant
-                            • Tisane camomille + magnésium
-                            • Masque de nuit réparateur
-                        </p>
-                    </div>
-                `;
-            }
-    
-            // Ajustements produits selon l'humeur
-            recommendations += `
-                    </div>
+    // Analyser l'état actuel
+    const lastMood = moodHistory[moodHistory.length - 1];
+    const needsStressRelief = lastMood && (lastMood.anxietyLevel > 6 || lastMood.moodScore < 4);
+    const needsSleepHelp = lastMood && lastMood.sleepQuality < 5;
+    const feelingGood = lastMood && lastMood.moodScore >= 7 && lastMood.anxietyLevel <= 4;
+
+    let recommendations = '<div style="display: grid; gap: 15px;">';
+
+    // Si aucun mood enregistré
+    if (!lastMood) {
+        recommendations += `
+            <div style="padding: 25px; background: linear-gradient(135deg, #f5f3ff, #faf8ff); border-radius: 12px; text-align: center;">
+                <h5 style="color: #6c5ce7; margin-bottom: 15px;">🌟 Ta routine mind-skin personnalisée</h5>
+                <p style="color: #718096; margin-bottom: 20px;">
+                    Enregistre ton premier mood pour recevoir des recommandations adaptées à ton état émotionnel et ta peau !
+                </p>
+                <button onclick="showMoodTracker()" style="padding: 12px 25px; background: linear-gradient(135deg, #6c5ce7, #a855f7); color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: bold;">
+                    📝 Enregistrer mon mood
+                </button>
+            </div>
+        `;
+        recommendations += '</div>';
+        recoDiv.innerHTML = recommendations;
+        return;
+    }
+
+    // Routine mind-skin du jour
+    recommendations += `
+        <div style="padding: 20px; background: linear-gradient(135deg, #f5f3ff, #faf8ff); border-radius: 12px;">
+            <h5 style="color: #6c5ce7; margin-bottom: 15px;">🌟 Ta routine mind-skin du jour</h5>
+            <div style="display: grid; gap: 10px;">
+    `;
+
+    if (needsStressRelief) {
+        recommendations += `
+            <div style="padding: 12px; background: white; border-radius: 8px;">
+                <strong style="color: #5f3dc4;">🧘‍♀️ Matin - Méditation guidée (5 min)</strong>
+                <p style="color: #718096; margin-top: 5px; font-size: 0.85em;">
+                    Commence ta routine skincare par 5 respirations profondes. 
+                    Le stress du matin augmente la production de sébum de 23%.
+                </p>
+            </div>
+            <div style="padding: 12px; background: white; border-radius: 8px;">
+                <strong style="color: #5f3dc4;">💆‍♀️ Soir - Auto-massage facial (3 min)</strong>
+                <p style="color: #718096; margin-top: 5px; font-size: 0.85em;">
+                    En appliquant ta crème, masse en mouvements circulaires. 
+                    Réduit le cortisol et améliore la circulation.
+                </p>
+            </div>
+        `;
+    } else if (feelingGood) {
+        recommendations += `
+            <div style="padding: 12px; background: white; border-radius: 8px;">
+                <strong style="color: #5f3dc4;">✨ Matin - Routine éclat (5 min)</strong>
+                <p style="color: #718096; margin-top: 5px; font-size: 0.85em;">
+                    Ton humeur est au top ! Profites-en pour un massage lymphatique 
+                    qui booste l'éclat naturel de ta peau.
+                </p>
+            </div>
+            <div style="padding: 12px; background: white; border-radius: 8px;">
+                <strong style="color: #5f3dc4;">🌸 Soir - Rituel bien-être</strong>
+                <p style="color: #718096; margin-top: 5px; font-size: 0.85em;">
+                    C'est le moment parfait pour un masque hydratant ou un soin premium. 
+                    Ta peau absorbe mieux quand tu es détendue !
+                </p>
+            </div>
+        `;
+    } else {
+        recommendations += `
+            <div style="padding: 12px; background: white; border-radius: 8px;">
+                <strong style="color: #5f3dc4;">🌿 Matin - Routine équilibre</strong>
+                <p style="color: #718096; margin-top: 5px; font-size: 0.85em;">
+                    Prends 2 minutes pour respirer profondément avant ta routine. 
+                    Un esprit calme = une peau apaisée.
+                </p>
+            </div>
+            <div style="padding: 12px; background: white; border-radius: 8px;">
+                <strong style="color: #5f3dc4;">🌙 Soir - Déconnexion beauté</strong>
+                <p style="color: #718096; margin-top: 5px; font-size: 0.85em;">
+                    Fais ta routine skincare sans téléphone. 
+                    Ce moment rien qu'à toi aide ta peau à se régénérer.
+                </p>
+            </div>
+        `;
+    }
+
+    if (needsSleepHelp) {
+        recommendations += `
+            <div style="padding: 12px; background: white; border-radius: 8px;">
+                <strong style="color: #5f3dc4;">🌙 Rituel sommeil-beauté (21h)</strong>
+                <p style="color: #718096; margin-top: 5px; font-size: 0.85em;">
+                    • Éteins les écrans 1h avant<br>
+                    • Tisane camomille + magnésium<br>
+                    • Masque de nuit réparateur
+                </p>
+            </div>
+        `;
+    }
+
+    // Fermer la div routine mind-skin
+    recommendations += `
+            </div>
+        </div>
+    `;
+
+    // Ajustements produits selon l'humeur
+    recommendations += `
+        <div style="padding: 20px; background: linear-gradient(135deg, #fff0f8, #ffe6f2); border-radius: 12px;">
+            <h5 style="color: #d6336c; margin-bottom: 15px;">🧴 Ajustements skincare selon ton mood</h5>
+    `;
+
+    if (lastMood && lastMood.triggers && lastMood.triggers.includes('période menstruelle')) {
+        recommendations += `
+            <p style="color: #a61e4d; margin-bottom: 10px;">
+                <strong>Phase menstruelle détectée :</strong>
+            </p>
+            <ul style="color: #718096; font-size: 0.9em; padding-left: 20px;">
+                <li>Passe à un nettoyant plus doux</li>
+                <li>Ajoute un sérum apaisant (centella, niacinamide)</li>
+                <li>Évite les exfoliants forts pendant 3 jours</li>
+            </ul>
+        `;
+    } else if (needsStressRelief) {
+        recommendations += `
+            <p style="color: #a61e4d; margin-bottom: 10px;">
+                <strong>Mode anti-stress activé :</strong>
+            </p>
+            <ul style="color: #718096; font-size: 0.9em; padding-left: 20px;">
+                <li>Double dose d'hydratation (sérum + crème)</li>
+                <li>Masque apaisant ce soir (aloe vera, camomille)</li>
+                <li>SPF 50 obligatoire (la peau stressée est plus sensible)</li>
+            </ul>
+        `;
+    } else if (feelingGood) {
+        recommendations += `
+            <p style="color: #a61e4d; margin-bottom: 10px;">
+                <strong>Mode glow activé ! ✨</strong>
+            </p>
+            <ul style="color: #718096; font-size: 0.9em; padding-left: 20px;">
+                <li>C'est le jour parfait pour un exfoliant doux</li>
+                <li>Essaie un nouveau sérum ou masque</li>
+                <li>Ta peau est réceptive aux actifs puissants (vitamine C, rétinol)</li>
+            </ul>
+        `;
+    } else {
+        recommendations += `
+            <p style="color: #a61e4d; margin-bottom: 10px;">
+                <strong>Mode maintenance :</strong>
+            </p>
+            <ul style="color: #718096; font-size: 0.9em; padding-left: 20px;">
+                <li>Continue ta routine habituelle</li>
+                <li>Hydratation classique matin et soir</li>
+                <li>N'oublie pas ta protection solaire !</li>
+            </ul>
+        `;
+    }
+
+    recommendations += `
+        </div>
+
+        <div style="padding: 20px; background: linear-gradient(135deg, #e3fafc, #d3f9fc); border-radius: 12px;">
+            <h5 style="color: #0891b2; margin-bottom: 15px;">💊 Suppléments mind-skin recommandés</h5>
+            <div style="display: grid; gap: 8px;">
+                <div style="display: flex; justify-content: space-between; padding: 10px; background: white; border-radius: 6px;">
+                    <span style="color: #0e7490;"><strong>Oméga-3</strong> - Anti-inflammatoire</span>
+                    <span style="color: #0891b2;">1000mg/jour</span>
                 </div>
-        
-                <div style="padding: 20px; background: linear-gradient(135deg, #fff0f8, #ffe6f2); border-radius: 12px;">
-                    <h5 style="color: #d6336c; margin-bottom: 15px;">🧴 Ajustements skincare selon ton mood</h5>
-            `;
-    
-            if (lastMood && lastMood.triggers.includes('période menstruelle')) {
-                recommendations += `
-                    <p style="color: #a61e4d; margin-bottom: 10px;">
-                        <strong>Phase menstruelle détectée :</strong>
-                    </p>
-                    <ul style="color: #718096; font-size: 0.9em; padding-left: 20px;">
-                        <li>Passe à un nettoyant plus doux</li>
-                        <li>Ajoute un sérum apaisant (centella, niacinamide)</li>
-                        <li>Évite les exfoliants forts pendant 3 jours</li>
-                    </ul>
-                `;
-            } else if (needsStressRelief) {
-                recommendations += `
-                    <p style="color: #a61e4d; margin-bottom: 10px;">
-                        <strong>Mode anti-stress activé :</strong>
-                    </p>
-                    <ul style="color: #718096; font-size: 0.9em; padding-left: 20px;">
-                        <li>Double dose d'hydratation (sérum + crème)</li>
-                        <li>Masque apaisant ce soir (aloe vera, camomille)</li>
-                        <li>SPF 50 obligatoire (la peau stressée est plus sensible)</li>
-                    </ul>
-                `;
-            }
-    
-            recommendations += `
+                <div style="display: flex; justify-content: space-between; padding: 10px; background: white; border-radius: 6px;">
+                    <span style="color: #0e7490;"><strong>Magnésium</strong> - Anti-stress</span>
+                    <span style="color: #0891b2;">300mg/soir</span>
                 </div>
-        
-                <div style="padding: 20px; background: linear-gradient(135deg, #e3fafc, #d3f9fc); border-radius: 12px;">
-                    <h5 style="color: #0891b2; margin-bottom: 15px;">💊 Suppléments mind-skin recommandés</h5>
-                    <div style="display: grid; gap: 8px;">
-                        <div style="display: flex; justify-content: space-between; padding: 10px; background: white; border-radius: 6px;">
-                            <span style="color: #0e7490;"><strong>Oméga-3</strong> - Anti-inflammatoire</span>
-                            <span style="color: #67e8f9;">1000mg/jour</span>
-                        </div>
-                        <div style="display: flex; justify-content: space-between; padding: 10px; background: white; border-radius: 6px;">
-                            <span style="color: #0e7490;"><strong>Magnésium</strong> - Anti-stress</span>
-                            <span style="color: #67e8f9;">300mg/soir</span>
-                        </div>
-                        <div style="display: flex; justify-content: space-between; padding: 10px; background: white; border-radius: 6px;">
-                            <span style="color: #0e7490;"><strong>Probiotiques</strong> - Axe intestin-peau</span>
-                            <span style="color: #67e8f9;">10 milliards UFC</span>
-                        </div>
-                    </div>
+                <div style="display: flex; justify-content: space-between; padding: 10px; background: white; border-radius: 6px;">
+                    <span style="color: #0e7490;"><strong>Probiotiques</strong> - Axe intestin-peau</span>
+                    <span style="color: #0891b2;">10 milliards UFC</span>
                 </div>
-            `;
-    
-            recommendations += '</div>';
-            recoDiv.innerHTML = recommendations;
-        }
+            </div>
+        </div>
+    `;
+
+    recommendations += '</div>';
+    recoDiv.innerHTML = recommendations;
+}
 // === FONCTIONS ANALYSEUR INCI ===
 function showIngredientAnalyzer() {
     // Cacher titre et progression
